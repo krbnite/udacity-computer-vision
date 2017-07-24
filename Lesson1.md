@@ -31,3 +31,8 @@ context, computer vision would identify these two squares as hailing from the sa
 
 ![simple-scene](./assets/simple-scene.png)
 
+## Computer Vision is NOT Image Processing
+Computer vision goes beyond image processing. In the example above, image processing would tell us that squares 
+A and B are the same color.  Vision goes beyond this: computer vision of this image demands that the image be
+understood --- that the computer correctly identifies squares A and B as being inherently different.
+
