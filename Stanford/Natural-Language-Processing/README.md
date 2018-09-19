@@ -1,6 +1,6 @@
 
 
-# L02: Word2Vec
+# L02: [Word2Vec](https://www.youtube.com/watch?v=ERibwqs9p38&index=2&list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6)
 
 WordNet is how people have commonly explored language in the past using Python/NLTK:
 ```python
@@ -87,6 +87,8 @@ Two moderately efficient training methods:
 
 One inefficient, but easy-to-understand "naive" algorithm:
 * Naive SoftMax
+
+...each vector has two representation: as a center word, and as a context word.
 
 ...at 28mins in, I only have 40mins left for this project today, so I'll stop taking notes and just
 watch. Maybe come back to this.
