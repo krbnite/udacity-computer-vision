@@ -38,6 +38,8 @@ words as atomic symbols.  In the language of vectors, this amounts to regarding 
 in a very high dimensional space, e.g., cat = [0, 0, 0, ..., 0, 1, 0, ..., 0, 0, 0].  This is called
 one-hot encoding in computer science.
 
+<img src="./images/words-as-atoms-do-not-capture-similarity.png" size=500>
+
 So, say your vocabulary is 500k words -- then a traditonal NLP approach would use 500k atomic symbols,
 which maps to a 500k-dimensional vector space.  However, if you consider typical problems from 
 physics, often a system is represented in a space of much higher dimensionality than its degrees of
@@ -55,27 +57,63 @@ product is concerned (one can imagine engineering a highly-specialized inner pro
 
 ## Distributional Similarity based representations
 In this approach, the meaning of a word is found by looking at its neighbors, and in this way a
-natural notion of synonyms begins to take shape.  ("You shall know a word by the company it keeps,"
-said linguist J. R. Firth.)
+natural notion of synonyms begins to take shape.  "You shall know a word by the company it keeps,"
+said linguist J. R. Firth. Says Wikipedia: "The basic idea of distributional semantics can be summed up in the 
+so-called Distributional hypothesis: linguistic items with similar distributions have similar meanings."
 
+* https://en.wikipedia.org/wiki/Distributional_semantics
+* https://en.wikipedia.org/wiki/Statistical_semantics
+
+---------------------------
+
+Interesting aside (from Wikipedia): "In recent years, the distributional hypothesis has provided the basis for the 
+theory of similarity-based generalization in language learning: the idea that children can figure out how to use words 
+they've rarely encountered before by generalizing about their use from distributions of similar words."  This strikes
+me as somehow related to one-shot (or zero-shot) learning...but I don't have time to confirm.
+
+Another side note: Latent Semantic Analytis (LSA) uses the distributional hypothesis. I found a set of slides
+where the instructor really did a nice job distilling what LSA is: LSA is the application of **singular value
+decomposition** to a **term-document matrix** to improve **similarity calculations**. (Btw, a criticism of LSA
+is that SVD rotates the matrix along axes of variability in the least-squares sense, which is only truly valid
+for normally-distributed data -- which is not the case for language data! There have been workarounds for this
+though.)
+
+------------------------------
+
+More on distributional similarity: 
 There are some choices to be made here. For example, we can look at neighboring words 2 steps back and 2
 steps after the word we are building a representation for.  One can then imagine building a vector for that
 word in a similar 500k-dimensional space, but where the vector's values are probability estimates of other 
 words being a neighbor of the given word.  In this way, dot products will not necessarily produce a 0 or
 a 1 -- we've rotated/transformed the vector representations into a way where "cat" and "kitten" will very
-likely prove to be more similar thant "cat" and "couch."
+likely prove to be more similar thant "cat" and "couch."  This is sometimes called a "distributed vector
+representation" of a word, but the prof notes "distributed representation" here is only loosely related to 
+"distributional similarity representation."  In this example, they are basically one and the same, but the
+concept of "distributed vector representation" goes beyond this particular case.  I think the terminology
+can be better understood as "global" and "local" representations of a word.  In the "local" representation,
+the word exists along one dimension in the language space, but in a "global" representation, the word
+is "smeared out" along many dimensions of the language space.
 
-The problem in my scenario above is that the space is still 500k dimensional, yet the similarity measures
+The problem in the scenario above is that the space is still 500k dimensional, yet the similarity measures
 clearly suggest non-orthogonality of the words.  But the 500k dimensions only exist because we originally
 chose a redundant atomic/basis vector representation of words. We have shown that the space is actually 
-smaller in size.
+smaller in size.  (This is where we will stop using the "distribution representation," though will continue
+using a "distributed representation".)
 
-So we can shrink the space and use "dense representations" of words.
+Next, we will shrink the space and use "dense representations" of words.
 
+-------------------------
+
+## Directly learning low-dimensional word vectors
 * [http://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf](2003: Bengio: A neural probabilistic language model)
+
+----------------------------------
 
 ## Now: Word2Vec
 Main idea: predict between every word and its context words.
+
+Side note: Just learned that "word2vec" and "skip-gram" are the same thing! Well, yes, but not
+exactly.  Skip-gram is 1 of 2 algorithms used to implement word2vec (the other being CBoW).
 
 Two main algorithms:
 * Skip-Gram: predict context words given target (position independent)
