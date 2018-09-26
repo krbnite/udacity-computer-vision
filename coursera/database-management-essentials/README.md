@@ -21,8 +21,8 @@ Some Resources:
 * [SQL Fiddle](http://sqlfiddle.com/)
   - create table schema, insert data, and run queries
   - supports MySQL, Postgres, and SQLite syntax (and more)
-* https://dev.mysql.com/downloads/
-  - download MySQL community edition server and client
+* [MySQL Community Edition Server and Client](https://dev.mysql.com/downloads/)
+* [MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
   
 
 Important characteristics of a database:
@@ -112,4 +112,24 @@ Differences between transactional and BI databases:
   - a BI query deals with thousands or millions of records
   - requires a lot of compute for transformation and integration processes; usually run off peak hours
 
+
+----------------------------------------------
+
+Why is the relational data model commercially dominant?
+* Simplicity & Familiarity: the idea of tables to organize data is simple and familiar
+* Strong Theoretical Foundation (from academic and commercial research)
+* Many academic and commercial sources have implemented the relational model for over 40 years
+  - lessons learned
+  - improvements along the way
+  - time tested
+* Use of standardized query language (SQL) across the field
+
+
+A relational database consists of a collection of tables.  Each table has a heading (table and column names)
+and a body (rows, occurrences of data). 
+
+Terminology
+* Table-oriented folk: table, row, column
+* Set-oriented folk: relation, tuple, attribute
+* Record-oriented folk: file, record, field
 
