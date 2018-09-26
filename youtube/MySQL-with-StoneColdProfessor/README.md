@@ -21,6 +21,27 @@ Fall 2018 Playlist
 
 ---------------------------------------------------------------------
 
+I'm simultaneously watching over a Coursera course that uses MySQL.  To recap:
+* I DL'd MySQL Server (community edition), and chose a password for the root account
+* I DL'd MySQL Workbench, and used root account to do some stuff
+  - made a new database
+  - played w/ ER diagrams
+* Brew-installed MySQL command line tools
+* Ran a security feature that HomeBrew recommended, which had me secure MySQL...
+
+So, basically, if I want to show my boss something, probably should use WorkBench to make it look
+less whacky (command line would likely be off-putting).  
+
+If I want to do quick things / experiment / etc, the command line is my home.
+
+But WorkBench offers features that the command line doesn't really have, e.g., the ER diagrams.
+
+This YouTube course gets the students as proficient as possible at the command line before switching
+to WorkBench.  The instructor admires WorkBench, but wants the students to really understand everything
+that is going on behind the scenes, especially in case they have to use the commandline on-the-job one day.
+
+---------------------------------------------------------------------
+
 # 01: [Getting familiar with SQL Basics and the Command Line](https://www.youtube.com/watch?v=nECo0OLjG1U)
 
 We are going to build a database, `premiere`.  The instruct showed that he already had
@@ -224,5 +245,70 @@ SELECT * FROM bob;
   +------+-----------+------------+--------------------------------+
 ```
 
+### Misc Commands
+Sometimes you might forget what database you are in... 
 
+```sql
+SELECT DATABASE()
+  +------------+
+  | database() |
+  +------------+
+  | premiere   |
+  +------------+
+```
+
+For a lot more info, just enter `status`:
+
+```sql
+STATUS
+  --------------
+  mysql  Ver 8.0.12 for osx10.13 on x86_64 (Homebrew)
+
+  Connection id:		35
+  Current database:	premiere
+  Current user:		root@localhost
+  SSL:			Not in use
+  Current pager:		stdout
+  Using outfile:		''
+  Using delimiter:	;
+  Server version:		8.0.12 MySQL Community Server - GPL
+  Protocol version:	10
+  Connection:		Localhost via UNIX socket
+  Server characterset:	utf8mb4
+  Db     characterset:	utf8mb4
+  Client characterset:	utf8mb4
+  Conn.  characterset:	utf8mb4
+  UNIX socket:		/tmp/mysql.sock
+  Uptime:			6 hours 3 sec
+
+  Threads: 2  Questions: 659  Slow queries: 0  Opens: 355  Flush tables: 2  Open tables: 325  Queries per second avg: 0.030
+--------------
+```
+
+# 03: [Command Analysis and Overview](https://www.youtube.com/watch?v=IsfI_CfT0cU)
+
+In a production database, you definitely do not want to change a column's type or change table structures too much, 
+lest ye tempt the wrath of chaos doth ensue (if that makes sense).
+
+HOWEVER, you can do it...just like you can try eating battery acid.  This is how:
+```sql
+use premiere;
+ALTER TABLE rep MODIFY COLUMN rep_num INT AUTO_INCREMENT;
+```
+
+<img src="altering-a-table.png" width="500">
+
+More ALTER commands:
+```sql
+ALTER TABLE rep MODIFY COLUMN last_name CHAR(15) DEFAULT 'Billy Bob';
+ALTER TABLE rep MODIFY COLUMN last_name CHAR(15) DEFAULT NULL;
+```
+
+There are keywords that are similar to MODIFY, and used in place of MODIFY, that you should be aware of:
+* CHANGE
+  - CHANGE can do one more thing than MODIFY: change the column's name
+  - however, this feature is burdensome: if you're not changing the name, you need to write the column's name twice
+  - moreover, renaming can be done w/ a RENAME command ... so know MODIFY, be aware of CHANGE
+* ALTER
+  - MODIFY can do everything that ALTER can do, so no need to learn both
 
