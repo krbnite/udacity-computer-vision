@@ -134,3 +134,72 @@ in another table.
 
 <img src="./images/foreign-keys.png" width="500">
 
+---------------------
+
+* reduce data redundancy
+* ensure data consistency
+
+-----------------------
+
+### Example: Non-Profit Org
+
+A non-profit organization holds **events** to collect **donations** from its **members**.  They have been
+having trouble keeping track of donations where multiple members contributed, e.g., a group
+donation.
+
+Candidate entity list:
+* events
+* donations
+* members
+
+Relationships:
+* an event can have zero-to-many donations
+* a donation can be made by 1-to-many members
+* a member can make many donations
+
+```
+EVENT--|-----||--DONATION--|-----||--DONATION_MEMBER_MAP--||-----|--MEMBER
+```
+
+### Example: Class Enrollment
+
+A community college offers **classes** to the public.  The college has many **teachers**, each
+of which teaches multiple classes.  **Students** can enroll in as many classes as they like.  The college
+has asked you to design a database to track enrollment for each class and to track how much to
+pay a teacher (based on how many classes they teach).  Additionally, a teacher can also be an **advisor**;
+students are assigned to one advisor.  The college would also like to track which student is
+advised by which teacher.
+
+Candidate entity list:
+* class
+* teacher
+* student
+* advisor
+
+Relationship:
+* a class may have multiple students, but only one teacher
+* a teacher may teach multiple classes
+* a student may be enrolled in multiple classes
+* a teacher may be an advisor
+* an advisor may advise many students
+* a student has only one advisor
+
+The class/student relationship is many-to-many, so a bridge (mapping) table must be
+created in between.  The teacher/advisor table is one-to-one (or perhaps one-to-zeor-or-one), so
+we don't really need a separate advisor table.  That said, the student/advisor relationship
+is different than the student/teacher relationship, both conceptually and in the data model.  One
+can relate a student indirectly to a teacher by noting what classes they are in and who teaches
+those classes...  However, a student is directly related to an advisor with no class serving as
+an intermediary.  To handle this, the FileMaker solution is to create an "instance" of the 
+teacher table to use as an advisor table... Seems like just a way of denoting this different
+type of relationship w/o creating new table... (Different var name, same var.)
+
+```
+STUDENT--|-----||--ENROLLMENT--||-----|--CLASS--||-----|--TEACHER
+  |
+  --||-----|--ADVISOR(TEACHER)
+```
+
+
+Self-Join table using instance...
+
