@@ -302,6 +302,12 @@ More ALTER commands:
 ```sql
 ALTER TABLE rep MODIFY COLUMN last_name CHAR(15) DEFAULT 'Billy Bob';
 ALTER TABLE rep MODIFY COLUMN last_name CHAR(15) DEFAULT NULL;
+-- create a primary key
+ALTER TABLE rep ADD PRIMARY KEY (rep_num);
+-- drop a primary key
+ALTER TABLE rep DROP PRIMARY KEY;
+-- create a dual primary key
+ALTER TABLE mytabl ADD PRIMARY KEY (col1, col2);
 ```
 
 There are keywords that are similar to MODIFY, and used in place of MODIFY, that you should be aware of:
@@ -311,4 +317,12 @@ There are keywords that are similar to MODIFY, and used in place of MODIFY, that
   - moreover, renaming can be done w/ a RENAME command ... so know MODIFY, be aware of CHANGE
 * ALTER
   - MODIFY can do everything that ALTER can do, so no need to learn both
+
+---------------
+
+### Running SQL commands from source files
+Say you create a text file w/ some repeatable commands.  You can run it from the MySQL environment:
+```sql
+souce path/to/my/file.sql
+```
 
